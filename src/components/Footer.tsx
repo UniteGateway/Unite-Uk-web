@@ -56,6 +56,7 @@ export const Footer: React.FC = () => {
                 { label: 'Project Journey', href: '#journey' },
                 { label: 'Solar Feasibility Calculator', href: '#calculator' },
                 { label: 'Franchise Opportunity (£20k*)', href: '#franchise' },
+                { label: 'Enterprise CRM & Admin OS', href: '#admin' },
                 { label: 'Contact & Assessment', href: '#contact' },
               ].map((item) => (
                 <li key={item.label}>

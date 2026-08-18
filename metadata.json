@@ -1,6 +1,6 @@
 {
   "name": "Unite Solar - Corporate Renewable Energy Platform",
-  "description": "Premium corporate renewable energy platform for Unite Solar, powered by Unite Greentek Limited (UK), a company of Unite Group Inc., USA.",
+  "description": "Enterprise renewable energy platform and operating system for Unite Solar, featuring UK Opportunity Hub, Franchise Platform, and complete Admin, CRM & Project Management System powered by Unite Greentek Limited.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

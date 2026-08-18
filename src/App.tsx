@@ -20,9 +20,14 @@ import { AssessmentModal } from './components/AssessmentModal';
 import { UkOpportunityPage } from './pages/UkOpportunityPage';
 import { FranchisePage } from './pages/FranchisePage';
 import { EnergySolution } from './types';
+import { AdminLayout } from './components/Admin/AdminLayout';
+import { AdminLogin } from './components/Admin/AdminLogin';
+import { AdminUser, AdminUserRole } from './types/adminTypes';
+import { adminStore } from './services/adminStore';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState<'home' | 'uk-opportunity' | 'franchise'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'uk-opportunity' | 'franchise' | 'admin'>('home');
+  const [currentUser, setCurrentUser] = useState<AdminUser | null>(adminStore.getCurrentUser());
   const [isAssessmentModalOpen, setIsAssessmentModalOpen] = useState(false);
   const [modalInitialType, setModalInitialType] = useState('commercial');
   const [modalInitialData, setModalInitialData] = useState<any>(null);
@@ -36,6 +41,13 @@ export default function App() {
       const hash = window.location.hash;
       const path = window.location.pathname;
       if (
+        hash.includes('admin') ||
+        hash.includes('crm') ||
+        hash.includes('portal') ||
+        path.includes('admin')
+      ) {
+        setCurrentView('admin');
+      } else if (
         hash.includes('uk-opportunity') ||
         hash.includes('project-portfolio') ||
         hash.includes('submit-project') ||
@@ -49,6 +61,10 @@ export default function App() {
         path.includes('franchise')
       ) {
         setCurrentView('franchise');
+      } else {
+        if (currentView === 'admin' && (hash === '' || hash === '#top')) {
+          setCurrentView('home');
+        }
       }
     };
 
@@ -97,17 +113,61 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleNavigateView = (view: 'home' | 'uk-opportunity' | 'franchise') => {
+  const handleNavigateView = (view: 'home' | 'uk-opportunity' | 'franchise' | 'admin') => {
     setCurrentView(view);
     if (view === 'uk-opportunity') {
       window.location.hash = 'uk-opportunity';
     } else if (view === 'franchise') {
       window.location.hash = 'franchise';
+    } else if (view === 'admin') {
+      window.location.hash = 'admin';
     } else {
       window.location.hash = '';
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const handleAdminLogin = (user: AdminUser) => {
+    setCurrentUser(user);
+    adminStore.setCurrentUser(user);
+  };
+
+  const handleAdminLogout = () => {
+    adminStore.logout();
+    setCurrentUser(null);
+  };
+
+  const handleSwitchRole = (role: AdminUserRole) => {
+    if (currentUser) {
+      const updatedUser: AdminUser = {
+        ...currentUser,
+        role
+      };
+      adminStore.setCurrentUser(updatedUser);
+      setCurrentUser(updatedUser);
+    }
+  };
+
+  // If user is viewing Admin CRM
+  if (currentView === 'admin') {
+    if (!currentUser) {
+      return (
+        <AdminLogin
+          onSuccess={handleAdminLogin}
+          onBackToPublic={() => handleNavigateView('home')}
+        />
+      );
+    }
+
+    return (
+      <AdminLayout
+        currentUser={currentUser}
+        onLogout={handleAdminLogout}
+        onNavigateToPublic={() => handleNavigateView('home')}
+        onSwitchRole={handleSwitchRole}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#06152F] text-slate-100 font-sans selection:bg-[#4E8B1E] selection:text-white flex flex-col relative overflow-x-hidden">

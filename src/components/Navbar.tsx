@@ -5,8 +5,8 @@ import { Phone, Mail, ChevronRight, Menu, X, ArrowUpRight, Zap, ShieldCheck } fr
 interface NavbarProps {
   onOpenAssessment: (type?: string) => void;
   onOpenFranchise: () => void;
-  currentView?: 'home' | 'uk-opportunity' | 'franchise';
-  onNavigate?: (view: 'home' | 'uk-opportunity' | 'franchise') => void;
+  currentView?: 'home' | 'uk-opportunity' | 'franchise' | 'admin';
+  onNavigate?: (view: 'home' | 'uk-opportunity' | 'franchise' | 'admin') => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -100,6 +100,19 @@ export const Navbar: React.FC<NavbarProps> = ({
             <Mail className="w-3 h-3 text-[#7AAA2B]" />
             <span>info@unitegreentech.com</span>
           </a>
+          <span className="text-slate-700">|</span>
+          <button
+            onClick={() => {
+              if (onNavigate) {
+                onNavigate('admin');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }}
+            className="flex items-center gap-1.5 text-xs font-mono font-bold text-[#7AAA2B] hover:text-white bg-[#0A1E3A] px-2.5 py-0.5 rounded-sm border border-line transition-colors cursor-pointer"
+          >
+            <ShieldCheck className="w-3 h-3 text-[#FF6321]" />
+            <span>CRM & ADMIN OS</span>
+          </button>
         </div>
       </div>
 
