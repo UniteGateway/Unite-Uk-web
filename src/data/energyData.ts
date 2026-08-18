@@ -1,4 +1,4 @@
-import { EnergySolution, BusinessModel, UkRegionOpportunity, OemPartnerCategory, JourneyStep, FranchiseTerritory } from '../types';
+import { EnergySolution, BusinessModel, UkRegionOpportunity, OemPartnerCategory, JourneyStep, LegacyFranchiseRegion } from '../types';
 
 export const ENERGY_SOLUTIONS: EnergySolution[] = [
   {
@@ -142,10 +142,15 @@ export const BUSINESS_MODELS: BusinessModel[] = [
     name: 'Direct Capital Expenditure',
     tagline: 'Invest once. Maximise long-term energy savings and balance sheet equity.',
     description: 'Your business funds and owns 100% of the renewable energy asset from Day 1. Benefit directly from immediate energy cost savings, capital allowances (such as full expensing), and rapid ROI.',
-    ownership: '100% Client Owned',
+    ownership: '100% Client Owned from Day 1',
     upfrontCost: 'Direct Client Capital',
     maintenance: 'Covered via Unite Solar comprehensive SLA',
     bestFor: 'Organisations with available capital expenditure looking for the fastest overall return and highest asset lifetime yield.',
+    whoItMaySuit: 'Owner-occupiers and corporations with capital budget seeking maximum IRR.',
+    howItWorks: 'Direct procurement and EPC delivery with turnkey warranty & engineering.',
+    capitalRequirement: '100% upfront (or asset finance).',
+    contractStructure: 'Turnkey EPC Contract + Optional Long-Term O&M Service Agreement.',
+    typicalProjectType: 'Commercial rooftops, corporate HQs, schools, and private estates.',
     keyPoints: [
       'Maximum total lifetime savings over 25+ years',
       'Full capital allowance tax benefits under UK Corporation Tax rules',
@@ -159,11 +164,16 @@ export const BUSINESS_MODELS: BusinessModel[] = [
     name: 'Corporate Power Purchase Agreement',
     tagline: 'Zero upfront cost. Buy clean solar energy at a locked, discounted rate.',
     description: 'Unite Greentek funds, engineers, installs, and maintains the solar/BESS system on your premises. You simply purchase the clean power generated at an agreed rate, significantly cheaper than grid tariff.',
-    ownership: 'Unite Greentek / Financing Vehicle',
+    ownership: 'Unite Greentek / Clean Energy Fund',
     upfrontCost: '£0 (Zero Upfront Capital)',
     maintenance: '100% Included by Unite Greentek throughout term',
     bestFor: 'Companies seeking immediate utility bill savings without spending capital or taking on technological and operational risks.',
     badge: 'Most Popular for C&I',
+    whoItMaySuit: 'Logistics hubs, manufacturing facilities, cold storage, and heavy power users.',
+    howItWorks: 'Fully funded installation; you pay a contracted per-kWh rate for generated solar electricity.',
+    capitalRequirement: '£0 Upfront Capex.',
+    contractStructure: 'Long-term Power Purchase Agreement (typically 15–25 years).',
+    typicalProjectType: 'Large commercial roofs (150 kWp – 10 MWp) with continuous load profile.',
     keyPoints: [
       'Immediate operational cost reduction with zero capital budget required',
       'Long-term price hedge against grid inflation and volatility',
@@ -177,10 +187,15 @@ export const BUSINESS_MODELS: BusinessModel[] = [
     name: 'Renewable Energy Service Company',
     tagline: 'Energy-as-a-Service model with shared performance incentives.',
     description: 'An integrated energy services agreement where Unite Greentek operates as your comprehensive clean energy provider, optimizing generation, storage, and demand-side response with unified billing.',
-    ownership: 'Energy Service Entity',
+    ownership: 'Energy Service Entity (RESCO Special Purpose Vehicle)',
     upfrontCost: '£0 Upfront Investment',
     maintenance: 'Complete lifecycle operation and proactive optimization',
     bestFor: 'Medium-to-large enterprises wanting a single partner to handle all power infrastructure, metering, and energy optimization.',
+    whoItMaySuit: 'Multi-site retail, industrial parks, and commercial property portfolios.',
+    howItWorks: 'Comprehensive Energy-as-a-Service with smart metering, peak shaving, and performance guarantees.',
+    capitalRequirement: '£0 Capital Outlay.',
+    contractStructure: 'Comprehensive Energy Services Agreement (ESA).',
+    typicalProjectType: 'Multi-technology commercial sites with Solar PV + BESS storage.',
     keyPoints: [
       'Comprehensive energy-as-a-service SLA covering equipment and software',
       'Demand response and battery arbitrage sharing mechanisms',
@@ -194,10 +209,15 @@ export const BUSINESS_MODELS: BusinessModel[] = [
     name: 'Build • Own • Operate • Transfer',
     tagline: 'Zero initial cost today. Full asset ownership transfer at end of term.',
     description: 'Unite Greentek builds, owns, and operates the clean energy plant for an agreed concession period (e.g. 10–15 years). At the conclusion of the term, ownership of the high-yielding plant transfers to you for £1.',
-    ownership: 'Unite Greentek during term → Transferred to Client at end',
+    ownership: 'Unite Greentek during term → Transferred 100% to Client at handover',
     upfrontCost: '£0 Upfront Capital',
     maintenance: 'Fully managed until handover, with asset handover health warranty',
     bestFor: 'Corporate asset owners who want zero risk during initial operational life with guaranteed ownership of a fully paid-off asset later.',
+    whoItMaySuit: 'Long-term freehold owners and institutions seeking ultimate asset ownership.',
+    howItWorks: 'Zero cost during concession; full asset ownership transfers to client for nominal sum at end.',
+    capitalRequirement: '£0 Upfront.',
+    contractStructure: 'Concession / BOOT Agreement (10–15 Years).',
+    typicalProjectType: 'Commercial manufacturing plants, distribution hubs, university campuses.',
     keyPoints: [
       'Structured pathway to 100% asset equity with zero upfront capital',
       'Zero maintenance headache during initial operational life',
@@ -211,10 +231,15 @@ export const BUSINESS_MODELS: BusinessModel[] = [
     name: 'Build • Own • Operate',
     tagline: 'Long-term clean utility generation without ever taking on asset liabilities.',
     description: 'Unite Greentek builds, retains permanent ownership of, and continuously operates the renewable power installation on your site or adjacent land, delivering low-cost green electrons perpetually.',
-    ownership: 'Unite Greentek / Infrastructure Fund',
+    ownership: 'Unite Greentek / Infrastructure Asset Fund',
     upfrontCost: '£0 Upfront Capital',
     maintenance: 'Perpetual full-scope O&M and inverter replacements',
     bestFor: 'Tenants, industrial campuses, and institutions that want clean energy without balance sheet asset liabilities or decommissioning duties.',
+    whoItMaySuit: 'Industrial tenants, leased estate operators, and land lease hosts.',
+    howItWorks: 'Permanent utility generation with zero equipment liability for the building occupant.',
+    capitalRequirement: '£0 Capital.',
+    contractStructure: 'Long-term Energy Supply & Roof/Land Lease Agreement.',
+    typicalProjectType: 'Ground mount solar parks, shared industrial private wires, port terminals.',
     keyPoints: [
       'Permanent hands-off clean energy generation for the site',
       'All repowering, inverter upgrades, and insurance handled by operator',
@@ -232,6 +257,11 @@ export const BUSINESS_MODELS: BusinessModel[] = [
     upfrontCost: 'Minimal / Structured deposit',
     maintenance: 'Standard or tailored O&M maintenance package',
     bestFor: 'Businesses wanting asset ownership benefits with smoothed, cashflow-positive monthly payments.',
+    whoItMaySuit: 'SMEs, commercial businesses, and agricultural facilities.',
+    howItWorks: 'Fixed monthly lease structured so bill savings exceed monthly lease cost.',
+    capitalRequirement: 'Low / Structured monthly installments.',
+    contractStructure: 'Equipment Lease Agreement (3–7 Years) with buy-out options.',
+    typicalProjectType: 'Rooftop solar (30 kWp – 250 kWp) and commercial battery systems.',
     keyPoints: [
       'Cash-flow positive from month one in most commercial scenarios',
       'Flexible buyout or upgrade terms at the conclusion of the lease',
@@ -453,7 +483,7 @@ export const PROJECT_JOURNEY: JourneyStep[] = [
   }
 ];
 
-export const FRANCHISE_TERRITORIES: FranchiseTerritory[] = [
+export const FRANCHISE_TERRITORIES: LegacyFranchiseRegion[] = [
   { region: 'London & Home Counties', code: 'UK-LON', status: 'Under Review', industrialDensity: 'Very High', annualSolarIrradiance: '1,080 kWh/m²', targetMrrPotential: '£180k - £350k/mo' },
   { region: 'South West & Bristol Channel', code: 'UK-SW', status: 'Available', industrialDensity: 'High', annualSolarIrradiance: '1,190 kWh/m²', targetMrrPotential: '£140k - £280k/mo' },
   { region: 'West Midlands & Birmingham', code: 'UK-WM', status: 'Available', industrialDensity: 'Extremely High', annualSolarIrradiance: '1,020 kWh/m²', targetMrrPotential: '£160k - £320k/mo' },

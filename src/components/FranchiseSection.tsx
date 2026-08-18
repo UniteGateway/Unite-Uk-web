@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FRANCHISE_TERRITORIES } from '../data/energyData';
-import { FranchiseTerritory } from '../types';
+import { LegacyFranchiseRegion } from '../types';
 import { Briefcase, CheckCircle2, ArrowRight, ShieldCheck, TrendingUp, Users, Cpu, Award, FileText, AlertCircle, Sparkles } from 'lucide-react';
 
 interface FranchiseSectionProps {
@@ -12,7 +12,7 @@ export const FranchiseSection: React.FC<FranchiseSectionProps> = ({
   onOpenFranchiseModal,
   onOpenAssessment,
 }) => {
-  const [selectedTerritory, setSelectedTerritory] = useState<FranchiseTerritory>(FRANCHISE_TERRITORIES[0]);
+  const [selectedTerritory, setSelectedTerritory] = useState<LegacyFranchiseRegion>(FRANCHISE_TERRITORIES[0]);
   const [activePathway, setActivePathway] = useState<'CUSTOMERS' | 'PROJECT_PARTNERS' | 'FRANCHISE'>('FRANCHISE');
 
   const franchiseBenefits = [

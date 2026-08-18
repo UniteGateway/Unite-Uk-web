@@ -2,12 +2,14 @@ import React from 'react';
 import { ArrowRight, Zap, Users, Sparkles, Building2, ShieldCheck, Mail, Phone } from 'lucide-react';
 
 interface FinalCtaProps {
+  onCalculateSolar: () => void;
   onRequestAssessment: () => void;
   onBecomePartner: () => void;
   onExploreFranchise: () => void;
 }
 
 export const FinalCta: React.FC<FinalCtaProps> = ({
+  onCalculateSolar,
   onRequestAssessment,
   onBecomePartner,
   onExploreFranchise,
@@ -43,14 +45,23 @@ export const FinalCta: React.FC<FinalCtaProps> = ({
           Partner with Unite Solar and Unite Greentek Limited to engineer, finance, and operate industry-leading renewable generation assets across Britain.
         </p>
 
-        {/* 3 Call-to-action buttons */}
+        {/* 4 Explicit Call-to-action buttons (Section 14) */}
         <div className="pt-2 flex flex-wrap items-center justify-center gap-2.5">
+          <button
+            id="final-cta-calculate"
+            onClick={onCalculateSolar}
+            className="px-6 py-3 rounded-sm font-bold text-xs mini-tag text-slate-950 bg-sky-400 hover:bg-sky-300 shadow-lg transition-all flex items-center gap-2 cursor-pointer"
+          >
+            <Zap className="w-3.5 h-3.5 fill-current" />
+            <span>CALCULATE MY SOLAR</span>
+          </button>
+
           <button
             id="final-cta-assessment"
             onClick={onRequestAssessment}
             className="px-6 py-3 rounded-sm font-bold text-xs mini-tag text-[#06152F] bg-[#7AAA2B] hover:bg-[#689423] shadow-lg transition-all flex items-center gap-2 cursor-pointer"
           >
-            <Zap className="w-3.5 h-3.5 fill-current" />
+            <Building2 className="w-3.5 h-3.5" />
             <span>REQUEST A PROJECT ASSESSMENT</span>
           </button>
 

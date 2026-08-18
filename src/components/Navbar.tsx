@@ -5,9 +5,16 @@ import { Phone, Mail, ChevronRight, Menu, X, ArrowUpRight, Zap, ShieldCheck } fr
 interface NavbarProps {
   onOpenAssessment: (type?: string) => void;
   onOpenFranchise: () => void;
+  currentView?: 'home' | 'uk-opportunity' | 'franchise';
+  onNavigate?: (view: 'home' | 'uk-opportunity' | 'franchise') => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenAssessment, onOpenFranchise }) => {
+export const Navbar: React.FC<NavbarProps> = ({
+  onOpenAssessment,
+  onOpenFranchise,
+  currentView = 'home',
+  onNavigate
+}) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [liveGridPct, setLiveGridPct] = useState(44.8);
@@ -29,15 +36,25 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAssessment, onOpenFranchis
   }, []);
 
   const navLinks = [
-    { label: 'SOLUTIONS', href: '#solutions' },
-    { label: 'BUSINESS MODELS', href: '#models' },
-    { label: 'UK OPPORTUNITY', href: '#uk-opportunity' },
-    { label: 'TECHNOLOGY', href: '#technology' },
-    { label: 'PROJECTS', href: '#journey' },
-    { label: 'FRANCHISE', href: '#franchise' },
-    { label: 'ABOUT', href: '#why-unite' },
-    { label: 'CONTACT', href: '#final-cta' },
+    { label: 'HOME PLATFORM', view: 'home' as const, href: '#top' },
+    { label: 'UK OPPORTUNITY', view: 'uk-opportunity' as const, href: '#uk-opportunity', isNew: true },
+    { label: 'SOLUTIONS', view: 'home' as const, href: '#solutions' },
+    { label: 'BUSINESS MODELS', view: 'home' as const, href: '#models' },
+    { label: 'PORTFOLIO', view: 'uk-opportunity' as const, href: '#project-portfolio' },
+    { label: 'FRANCHISE', view: 'franchise' as const, href: '#franchise', tag: '£20k*' },
+    { label: 'CONTACT', view: 'home' as const, href: '#final-cta' },
   ];
+
+  const handleLinkClick = (e: React.MouseEvent, link: (typeof navLinks)[0]) => {
+    if (onNavigate) {
+      if (link.view !== currentView) {
+        e.preventDefault();
+        onNavigate(link.view);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+    }
+  };
 
   return (
     <header
@@ -89,7 +106,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAssessment, onOpenFranchis
       {/* Main Navbar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand identity */}
-        <a href="#" className="flex items-center gap-3 group" aria-label="Unite Solar Home">
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            if (onNavigate) onNavigate('home');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="flex items-center gap-3 group cursor-pointer"
+          aria-label="Unite Solar Home"
+        >
           <UniteSolarLogo size="md" theme="dark" />
           <div className="hidden sm:flex flex-col pl-3 border-l border-slate-700/80">
             <span className="text-[10px] uppercase font-bold tracking-widest text-[#7AAA2B]">
@@ -103,22 +129,43 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAssessment, onOpenFranchis
 
         {/* Desktop Nav links */}
         <nav className="hidden xl:flex items-center gap-6 text-[13px] font-semibold text-slate-300">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="hover:text-white transition-colors relative py-1 hover:after:w-full after:w-0 after:h-[2px] after:bg-[#F37021] after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-200"
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = link.view === currentView;
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={(e) => handleLinkClick(e, link)}
+                className={`transition-colors relative py-1 hover:text-white flex items-center gap-1.5 ${
+                  isActive ? 'text-[#7AAA2B] font-bold' : 'text-slate-300'
+                }`}
+              >
+                <span>{link.label}</span>
+                {link.isNew && (
+                  <span className="px-1.5 py-0.2 rounded-full text-[9px] font-mono font-bold bg-[#FF6321] text-white animate-pulse">
+                    UK HUB
+                  </span>
+                )}
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#7AAA2B]" />
+                )}
+              </a>
+            );
+          })}
         </nav>
 
         {/* CTA Actions */}
         <div className="hidden sm:flex items-center gap-3">
           <button
             id="nav-franchise-button"
-            onClick={onOpenFranchise}
+            onClick={() => {
+              if (onNavigate) {
+                onNavigate('franchise');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              } else {
+                onOpenFranchise();
+              }
+            }}
             className="px-3.5 py-2 rounded-sm mini-tag text-slate-200 bg-slate-800/80 hover:bg-slate-700 border border-line transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
           >
             <span>Franchise</span>
@@ -163,10 +210,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAssessment, onOpenFranchis
               <a
                 key={link.label}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => {
+                  setMobileMenuOpen(false);
+                  handleLinkClick(e, link);
+                }}
                 className="flex items-center justify-between p-2.5 rounded-lg bg-slate-900/60 text-slate-200 text-sm font-medium hover:bg-slate-800 hover:text-white border border-slate-800"
               >
                 <span>{link.label}</span>
+                {link.isNew && (
+                  <span className="text-[9px] font-mono font-bold bg-[#FF6321] text-white px-1.5 py-0.5 rounded-full">
+                    NEW
+                  </span>
+                )}
                 <ChevronRight className="w-4 h-4 text-slate-500" />
               </a>
             ))}

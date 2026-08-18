@@ -121,19 +121,36 @@ export const BusinessModels: React.FC<BusinessModelsProps> = ({ onOpenAssessment
               {currentModel.description}
             </p>
 
-            {/* Quick Metrics Grid in stat card format */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-              <div className="stat-card p-2.5 rounded-sm bg-[#0A1E3A]/60 border-line">
-                <span className="mini-tag text-slate-400">Upfront Capital</span>
-                <p className="text-xs font-bold text-white mt-0.5">{currentModel.upfrontCost}</p>
+            {/* 6 Core Structured Comparison Dimensions (Section 7) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2">
+              <div className="p-3 rounded-sm bg-[#0A1E3A]/70 border border-line">
+                <span className="mini-tag text-[#7AAA2B] block mb-0.5">01. WHO IT MAY SUIT</span>
+                <p className="text-xs text-white font-medium">{currentModel.whoItMaySuit || currentModel.bestFor}</p>
               </div>
-              <div className="stat-card p-2.5 rounded-sm bg-[#0A1E3A]/60 border-line">
-                <span className="mini-tag text-slate-400">Asset Ownership</span>
-                <p className="text-xs font-bold text-white mt-0.5">{currentModel.ownership}</p>
+
+              <div className="p-3 rounded-sm bg-[#0A1E3A]/70 border border-line">
+                <span className="mini-tag text-[#7AAA2B] block mb-0.5">02. HOW IT WORKS</span>
+                <p className="text-xs text-white font-medium">{currentModel.howItWorks || currentModel.description}</p>
               </div>
-              <div className="stat-card-orange p-2.5 rounded-sm bg-[#0A1E3A]/60 border-line">
-                <span className="mini-tag text-slate-400">O&M Maintenance</span>
-                <p className="text-xs font-bold text-white mt-0.5">{currentModel.maintenance}</p>
+
+              <div className="p-3 rounded-sm bg-[#0A1E3A]/70 border border-line">
+                <span className="mini-tag text-[#FF6321] block mb-0.5">03. CAPITAL REQUIREMENT</span>
+                <p className="text-xs text-white font-medium">{currentModel.capitalRequirement || currentModel.upfrontCost}</p>
+              </div>
+
+              <div className="p-3 rounded-sm bg-[#0A1E3A]/70 border border-line">
+                <span className="mini-tag text-sky-400 block mb-0.5">04. ASSET OWNERSHIP</span>
+                <p className="text-xs text-white font-medium">{currentModel.ownership}</p>
+              </div>
+
+              <div className="p-3 rounded-sm bg-[#0A1E3A]/70 border border-line">
+                <span className="mini-tag text-slate-400 block mb-0.5">05. CONTRACT STRUCTURE</span>
+                <p className="text-xs text-white font-medium">{currentModel.contractStructure || 'Long-Term Contractual Agreement'}</p>
+              </div>
+
+              <div className="p-3 rounded-sm bg-[#0A1E3A]/70 border border-line">
+                <span className="mini-tag text-slate-400 block mb-0.5">06. TYPICAL PROJECT TYPE</span>
+                <p className="text-xs text-white font-medium">{currentModel.typicalProjectType || 'Commercial & Industrial Sites'}</p>
               </div>
             </div>
 
@@ -150,6 +167,10 @@ export const BusinessModels: React.FC<BusinessModelsProps> = ({ onOpenAssessment
               </div>
             </div>
 
+            <div className="text-[10px] text-slate-400 italic">
+              *Subject to project assessment and contractual terms.
+            </div>
+
             {/* Action CTA */}
             <div className="pt-2 flex flex-col sm:flex-row gap-3">
               <button
@@ -157,7 +178,7 @@ export const BusinessModels: React.FC<BusinessModelsProps> = ({ onOpenAssessment
                 onClick={() => onOpenAssessment(currentModel.code)}
                 className="flex-1 py-3 px-5 rounded-sm mini-tag text-white bg-[#FF6321] hover:bg-orange-600 flex items-center justify-center gap-2 shadow-lg cursor-pointer transition-colors"
               >
-                <span>Structure a {currentModel.code} Proposal</span>
+                <span>STRUCTURE A {currentModel.code} PROPOSAL</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
